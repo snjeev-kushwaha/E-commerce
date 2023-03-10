@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Header from "./component/layout/header/Header.js";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import WebFont from 'webfontloader'
-
+import Footer from './component/layout/footer/Footer'
+import Home from './component/home/Home.js'
 
 function App() {
 
@@ -16,9 +17,14 @@ function App() {
   }, [])
 
   return (
-    <Router>
-      <Header />
-    </Router>
+    <>
+        <Header />
+        <Routes>
+          <Route extact path='/' element={<Home />} />
+        </Routes>
+
+        <Footer />
+    </>
   );
 }
 
