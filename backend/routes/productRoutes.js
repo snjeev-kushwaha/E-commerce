@@ -23,7 +23,7 @@ productRoute.route('/admin/product/:id')
     .put(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
 
-productRoute.route('/admin/product/:id').get(getProductDetails);
+productRoute.route('/product/:id').get(getProductDetails);
 
 productRoute.route('/review').put(isAuthenticatedUser, createProductReview);
 
