@@ -1,23 +1,72 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './products.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearErrors, getProduct } from '../../actions/ProductAction';
 import Loader from '../layout/loader/Loader';
 import ProductCard from '../home/ProductCard';
+import Pagination from 'react-js-pagination'
+import { useParams } from 'react-router-dom';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
+import { useAlert } from 'react-alert';
+import MetaData from '../layout/MetaData'
+
+const categories = [
+    "Laptop",
+    "Footware",
+    "Bottom",
+    "Tops",
+    "Attire",
+    "Camera",
+    "SmartPhones",
+]
 
 
 const Products = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const { keyword } = useParams();
+    const alert = useAlert()
 
-    const { products, loading, error, productCount } = useSelector(state => state.products)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [price, setPrice] = useState([0, 25000]);
+    const [category, setCategory] = useState("");
+    const [ratings, setRatings] = useState(0);
+
+    const {
+        products,
+        loading,
+        error,
+        productCount,
+        resultPerPage,
+        filteredProductsCount,
+    } = useSelector(state => state.products);
+
+    const id = keyword;
+
+    const setCurrentPageNo = (e) => {
+        setCurrentPage(e);
+    }
+    const priceHandler = (e, newPrice) => {
+        setPrice(newPrice);
+    }
 
     useEffect(() => {
-        dispatch(getProduct())
-    }, [dispatch]);
+        if(error){
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+        dispatch(getProduct(id, currentPage, price, category, ratings))
+    }, [dispatch, id, currentPage, price, category, ratings, alert, error]);
+
+    let count = filteredProductsCount;
 
     return (
         <Fragment>
-            {loading ? (<Loader />) : <Fragment>
+            {loading ? (
+            <Loader />
+            ) : <Fragment>
+                
+                <MetaData title="PRODUCTS -- ECOMMERCE" />
                 <h2 className='productsHeading'>Products</h2>
 
                 <div className='products'>
@@ -26,6 +75,98 @@ const Products = () => {
                             <ProductCard key={product._id} product={product} />
                         )}
                 </div>
+
+                {/* {keyword && <div className='filterBox'>
+                    <Typography>Price</Typography>
+                    <Slider
+                        value={price}
+                        onChange={priceHandler}
+                        valueLabelDisplay="auto"
+                        aria-labelledby='range-slider'
+                        min={0}
+                        max={25000}
+                    />
+
+                    <Typography>Categories</Typography>
+                    <ul className='categoryBox'>
+                        {categories.map((category) => (
+                            <li className='category-link'
+                                key={category}
+                                onClick={() => setCategory(category)}
+                            >
+                                {category}
+                            </li>
+                        ))}
+                    </ul>
+                    <fieldset>
+                        <Typography component="legend">Ratings Above</Typography>
+                        <Slider
+                            vlaue={ratings}
+                            onChange={(e, newRating) => {
+                                setRatings(newRating)
+                            }}
+                            aria-labelledby="continuous-slider"
+                            valueLabelDisplay='auto'
+                            min={0}
+                            max={5}
+                        />
+                    </fieldset>
+                </div>} */}
+
+                <div className='filterBox'>
+                    <Typography>Price</Typography>
+                    <Slider
+                        value={price}
+                        onChange={priceHandler}
+                        valueLabelDisplay="auto"
+                        aria-labelledby='range-slider'
+                        min={0}
+                        max={25000}
+                    />
+
+                    <Typography>Categories</Typography>
+                    <ul className='categoryBox'>
+                        {categories.map((category) => (
+                            <li className='category-link'
+                                key={category}
+                                onClick={() => setCategory(category)}
+                            >
+                                {category}
+                            </li>
+                        ))}
+                    </ul>
+                    <fieldset>
+                        <Typography component="legend">Ratings Above</Typography>
+                        <Slider
+                            vlaue={ratings}
+                            onChange={(e, newRating) => {
+                                setRatings(newRating)
+                            }}
+                            aria-labelledby="continuous-slider"
+                            valueLabelDisplay='auto'
+                            min={0}
+                            max={5}
+                        />
+                    </fieldset>
+                </div>
+
+                {resultPerPage < count && (
+                    <div className='paginationBox'>
+                        <Pagination activePage={currentPage}
+                            itemsCountPerPage={resultPerPage}
+                            totalItemsCount={productCount}
+                            onChange={setCurrentPageNo}
+                            nextPageText="Next"
+                            prevPageText="Prev"
+                            firstPageText="1st"
+                            lastPageText="Last"
+                            itemClass='page-item'
+                            linkClass='page-link'
+                            activeClass='pageItemActive'
+                            activeLinkClass='pageLinkActive'
+                        />
+                    </div>
+                )}
             </Fragment>}
         </Fragment>
     )
