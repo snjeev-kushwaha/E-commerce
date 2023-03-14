@@ -4,19 +4,25 @@ const ErrorHandler = require('../utils/errorhander')
 const ApiFeatures = require('../utils/apifeatures')
 
 const getAllProducts = asyncHandler(async (req, res) => {
-   const resultPerPage = 8;
+   const resultPerPage = 10;
    const productCount = await Product.countDocuments()
 
    const apiFeature = new ApiFeatures(Product.find(), req.query)
       .search()
       .filter()
-      .pagination(resultPerPage)
-   const products = await apiFeature.query;
+
+   let products = await apiFeature.query;
+   let filteredProductsCount = products.length;
+   apiFeature.pagination(resultPerPage)
+
+   // products = await apiFeature.query;
 
    res.status(200).json({
       success: true,
       products,
-      productCount
+      productCount,
+      resultPerPage,
+      filteredProductsCount,
    })
 })
 
@@ -100,7 +106,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
       // avg = avg+rev.rating
       avg += rev.rating
    })
-   product.ratings = avg / product.reviews.length  
+   product.ratings = avg / product.reviews.length
    await product.save({ validateBeforeSave: false })
    res.status(200).json({
       success: true,
