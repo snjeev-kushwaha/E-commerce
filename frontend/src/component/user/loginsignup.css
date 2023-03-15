@@ -26,12 +26,13 @@
 
 .login_signUp_toggle > p {
   color: rgba(0, 0, 0, 0.678);
-  font: 300 1vmax "Roboto";
+  font: 300 1.2vmax "Roboto";
   transition: all 0.5s;
   cursor: pointer;
   display: grid;
   place-items: center;
   width: 100%;
+  margin-top: 10px;
 }
 
 .login_signUp_toggle > p:hover {
@@ -54,8 +55,12 @@
   margin: auto;
   padding: 2vmax;
   justify-content: space-evenly;
-  height: 70%;
+  height: 80%;
   transition: all 0.5s;
+}
+
+.signUpForm {
+  transform: translateY(-100%) translateX(-100vmax);
 }
 
 .loginForm > div,
@@ -97,6 +102,32 @@
   color: black;
 }
 
+#registerImage > img {
+  width: 3vmax;
+  border-radius: 100%;
+}
+#registerImage > input {
+  display: flex;
+  padding: 0%;
+}
+#registerImage > input::file-selector-button {
+  cursor: pointer;
+  width: 100%;
+  height: 5vh;
+  z-index: 2;
+  margin: 0%;
+  border: none;
+  font: 400 0.8vmax cursive;
+  transition: all 0.5s;
+  padding: 0 1vmax;
+  color: rgba(0, 0, 0, 0.623);
+  background-color: rgb(255, 255, 255);
+}
+
+#registerImage > input::file-selector-button:hover {
+  background-color: rgb(235, 235, 235);
+}
+
 .loginBtn,
 .signUpBtn {
   border: none;
@@ -131,4 +162,49 @@
 
 .shiftToRight {
   transform: translateX(100%);
+}
+
+@media screen and (max-width: 600px) {
+  .LoginSignUpContainer {
+    background-color: white;
+  }
+  .LoginSignUpBox {
+    width: 100vw;
+    height: 95vh;
+  }
+  .login_signUp_toggle {
+    height: 5vmax;
+  }
+  .login_signUp_toggle > p {
+    font: 300 2.0vmax "Roboto";
+  }
+  .loginForm,
+  .signUpForm {
+    padding: 5vmax;
+    font: 300 1.7vmax cursive;
+  }
+  .loginForm > div > svg,
+  .signUpForm > div > svg {
+    font-size: 2.8vmax;
+  }
+  .loginForm > a {
+    font: 500 1.8vmax "Gill Sans";
+  }
+  #registerImage > img {
+    width: 8vmax;
+    border-radius: 100%;
+  }
+  #registerImage > input::file-selector-button {
+    height: 7vh;
+    font: 400 1.8vmax cursive;
+  }
+  .loginBtn,
+  .signUpBtn {
+    font: 300 1.9vmax "Roboto";
+    padding: 1.8vmax;
+  }
+  .loginForm > div > input,
+.signUpForm > div > input {
+  font: 400 1.8vmax cursive;
+}
 }
