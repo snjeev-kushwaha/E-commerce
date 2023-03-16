@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState, useEffect } from 'react';
 import './loginsignup.css';
 import Loader from '../layout/loader/Loader';
 import { Link, useNavigate } from 'react-router-dom';
-import MaiOutlineIcon from '@material-ui/icons/MailOutline';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import FaceIcon from '@material-ui/icons/Face';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,7 +96,8 @@ const LoginSignup = () => {
 
     return (
         <Fragment>
-            {loading ? (<Loader />) : (<Fragment>
+            {loading ? (<Loader />) : (
+            <Fragment>
                 <div className='LoginSignUpContainer'>
                     <div className='LoginSignUpBox'>
                         <div>
@@ -108,7 +109,7 @@ const LoginSignup = () => {
                         </div>
                         <form className='loginForm' ref={loginTab} onSubmit={loginSubmit}>
                             <div className='loginEmail'>
-                                <MaiOutlineIcon />
+                                <MailOutlineIcon />
                                 <input
                                     type="email"
                                     placeholder='Email'
@@ -142,7 +143,7 @@ const LoginSignup = () => {
                                 />
                             </div>
                             <div className="signUpEmail">
-                                <MaiOutlineIcon />
+                                <MailOutlineIcon />
                                 <input type="emial"
                                     placeholder='Email'
                                     required

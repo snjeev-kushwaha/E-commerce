@@ -9,14 +9,19 @@ import ProductDetails from './component/product/ProductDetails.js';
 import Products from './component/product/Products.js';
 import Search from './component/product/Search.js';
 import LoginSignup from './component/user/LoginSignup';
-import store from './sotre';
+import store from './store';
 import { loadUser } from './actions/UserAction';
 import UserOptions from './component/layout/header/UserOptions.js';
 import { useSelector } from 'react-redux';
+import Profile from './component/user/Profile.js';
+// import ProtectedRoute from './component/route/ProtectedRoute';
+import Protected from './component/route/ProtectedRoute';
+import UpdateProfile from './component/user/UpdatePofile.js';
+import UpdatePassword from './component/user/UpdatePassword.js';
+import ForgotPassword from './component/user/ForgotPassword.js';
 
 function App() {
-
-  const { isAuthenticated, user } = useSelector(state => state.user)
+  const { isAuthenticated, user } = useSelector((state) => state.user)
 
   useEffect(() => {
     WebFont.load({
@@ -40,6 +45,14 @@ function App() {
 
         <Route extact path='/search' element={<Search />} />
         <Route extact path='/login' element={<LoginSignup />} />
+
+        <Route extact path='/account' element={<Protected Component={Profile} />} />
+
+        <Route extact path='/me/update' element={<Protected Component={UpdateProfile} />} />
+
+        <Route extact path='/password/update' element={<Protected Component={UpdatePassword} />} />
+
+        <Route extact path='/password/forgot' element={<Protected Component={ForgotPassword} />} />
       </Routes>
 
       <Footer />
