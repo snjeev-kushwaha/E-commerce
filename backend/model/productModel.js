@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    images:[ {
+    images: [{
         public_id: {
             type: String,
             required: true
@@ -28,47 +28,47 @@ const productSchema = new mongoose.Schema({
             required: true
         }
     }],
-    category:{
+    category: {
         type: String,
-        required:[true, "Please enter prodcut category"]
+        required: [true, "Please enter prodcut category"]
     },
-    stock:{
+    stock: {
         type: String,
         requried: [true, "Please enter product stock"],
-        maxLength:[4, "Stock cannot exceed 4 characters"],
+        maxLength: [4, "Stock cannot exceed 4 characters"],
         default: 1
     },
     numOfReviews: {
         type: Number,
-        default:0
+        default: 0
     },
     reviews: [
         {
-            user:{
+            user: {
                 type: mongoose.Schema.ObjectId,
                 ref: "User",
                 required: true,
             },
-            name:{
+            name: {
                 type: String,
                 required: true
             },
-            rating:{
+            rating: {
                 type: Number,
                 required: true
             },
-            comment:{
-                type:Number,
+            comment: {
+                type: Number,
                 required: true
             }
         }
     ],
-    user:{
+    user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
         required: true,
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         default: Date.now
     }

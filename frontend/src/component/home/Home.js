@@ -38,7 +38,7 @@ const Home = () => {
         <h2 className='homeHeading'>Featured Products</h2>
 
         <div className='container' id='container'>
-          {products && products.map((product) => <ProductCard product={product} />)}
+          {products && products.map((product, index) => <ProductCard key={index} product={product} />)}
         </div></Fragment>}
     </Fragment>
   )
