@@ -84,9 +84,11 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
 
     // const resetPasswordUrl = `http://localhost/api/v1/password/reset/${resetToken}`
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/user/password/reset/${resetToken}`
+    // const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/user/password/reset/${resetToken}`;
 
-    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it`;
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+
+    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it`;              //ttemp;
 
     try {
         await sendEmail({
@@ -198,7 +200,7 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
     //     }
     // }
     // we will add cloudinary later
-    
+
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,

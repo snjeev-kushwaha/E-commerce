@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useState, useEffect } from 'react';
 import './loginsignup.css';
 import Loader from '../layout/loader/Loader';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import FaceIcon from '@material-ui/icons/Face';
@@ -11,6 +11,7 @@ import { useAlert } from 'react-alert';
 
 
 const LoginSignup = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const alert = useAlert();
@@ -65,15 +66,17 @@ const LoginSignup = () => {
         }
     }
 
+    const redirect = location.search ? location.search.split("=")[1] : "/account"
+
     useEffect(() => {
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
         if (isAuthenticated) {
-            navigate('/account');
+            navigate(redirect);
         }
-    }, [dispatch, error, alert, navigate, isAuthenticated]);
+    }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {
@@ -128,7 +131,7 @@ const LoginSignup = () => {
                                     onChange={(e) => setLoginPassword(e.target.value)}
                                 />
                             </div>
-                            <Link to='/password/forget'>Forget Password ?</Link>
+                            <Link to='/password/forgot'>Forget Password ?</Link>
                             <input type="submit" value="Login" className='loginBtn' />
                         </form>
                         <form className='signUpForm' ref={registerTab} encType="multipart/form-data" onSubmit={registerSubmit}>
