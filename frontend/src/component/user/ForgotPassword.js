@@ -19,7 +19,6 @@ const ForgotPassword = () => {
 
     const forgotPasswordSubmit = (e) => {
         e.preventDefault();
-
         const myForm = new FormData();
 
         myForm.set("email", email);
@@ -36,6 +35,7 @@ const ForgotPassword = () => {
             alert.success(message);
         }
     }, [dispatch, error, alert, message]);
+
     return (
         <Fragment>
             {loading ? (

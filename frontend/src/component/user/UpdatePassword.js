@@ -50,6 +50,7 @@ const UpdatePassword = () => {
             });
         }
     }, [dispatch, error, alert, navigate, isUpdated]);
+    
     return (
         <Fragment>
             {loading ? (    
