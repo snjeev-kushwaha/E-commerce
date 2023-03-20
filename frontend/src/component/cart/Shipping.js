@@ -10,8 +10,9 @@ import LocationCityIcon from '@mui/icons-material/LocationCity';
 import PublicIcon from '@mui/icons-material/Public';
 import PhoneIcon from '@mui/icons-material/Phone';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
-import { Country, State, city } from 'country-state-city';
+import { Country, State } from 'country-state-city';
 import { useAlert } from 'react-alert';
+import CheckoutSteps from '../cart/CheckoutSteps';
 
 const Shipping = () => {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Shipping = () => {
         <Fragment>
             <MetaData title="Shipping Details" />
 
-            {/* <CheckoutSteps activeStep={0} /> */}
+            <CheckoutSteps activeStep={0} />
 
             <div className="shippingContainer">
                 <div className="shippingBox">
