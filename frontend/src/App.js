@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Header1 from "./component/layout/header/Header1";
 import { Routes, Route } from "react-router-dom";
@@ -22,9 +22,27 @@ import ForgotPassword from './component/user/ForgotPassword';
 import ResetPassword from './component/user/ResetPassword';
 import Cart from './component/cart/Cart';
 import Shipping from './component/cart/Shipping';
+import ConfirmOrder from './component/cart/ConfirmOrder';
+import axios from 'axios';
+import config from './config';
+import Payment from './component/cart/Payment';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import OrderSuccess from './component/cart/OrderSuccess';
+import MyOrders from './component/order/MyOrders';
+import OrderDetails from './component/order/OrderDetails';
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user)
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    const data = await axios.get(`${config.URL}/stripeapikey`);
+
+    setStripeApiKey(data.stripeApiKey);
+    console.log(data.data, "data")
+  }
 
   useEffect(() => {
     WebFont.load({
@@ -32,7 +50,8 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"]
       }
     });
-    store.dispatch(loadUser())
+    store.dispatch(loadUser());
+    getStripeApiKey();
   }, [])
 
   return (
@@ -62,6 +81,20 @@ function App() {
         <Route extact path='/cart' element={<Cart />} />
 
         <Route extact path='/shipping' element={<Protected Component={Shipping} />} />
+
+        <Route extact path='/order/confirm' element={<Protected Component={ConfirmOrder} />} />
+
+        {stripeApiKey && (
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <Route extact path='/process/payment' element={<Protected Component={Payment} />} />
+          </Elements>
+        )}
+
+        <Route extact path='/success' element={<Protected Component={OrderSuccess} />} />
+
+        <Route extact path='/orders' element={<Protected Component={MyOrders} />} />
+
+        <Route extact path='/order/:id' element={<Protected Component={OrderDetails} />} />
 
       </Routes>
 
