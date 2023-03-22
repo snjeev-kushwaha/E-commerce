@@ -4,6 +4,7 @@ import {
     SAVE_SHIPPING_INFO
 } from '../constants/cartConstants';
 
+// Cart Details
 export const cartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
         case ADD_TO_CART:

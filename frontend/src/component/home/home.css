@@ -80,11 +80,12 @@
   margin: 0.5vmax;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
-.productCard > div > span {
-  margin: 0.5vmax;
-  font: 300 0.69vmax "Roboto";
+.productCardSpan {
+  font: 300 0.7vmax "Roboto";
 }
+
 .productCard > p {
   font-family: "Roboto";
   font-size: 1.2vmax;

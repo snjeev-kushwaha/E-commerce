@@ -27,7 +27,7 @@ import {
     RESET_PASSWORD_FAIL,
 } from '../constants/userConstants';
 
-
+// User Details
 export const userReducer = (state = {}, action) => {
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -88,6 +88,7 @@ export const userReducer = (state = {}, action) => {
     }
 }
 
+// User Profile Details
 export const profileReducer = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_PROFILE_REQUEST:
@@ -131,6 +132,7 @@ export const profileReducer = (state = {}, action) => {
     }
 }
 
+// Forgot password 
 export const forgotPasswordReducer = (state = {}, action) => {
     switch (action.type) {
         case FORGOT_PASSWORD_REQUEST:
