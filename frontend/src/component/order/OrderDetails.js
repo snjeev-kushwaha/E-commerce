@@ -24,7 +24,7 @@ const OrderDetails = () => {
 
     dispatch(getorderDetails(id));
   }, [dispatch, alert, error, id]);
-  
+
   return (
     <Fragment>
       {loading ? (

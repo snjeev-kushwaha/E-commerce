@@ -31,6 +31,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import OrderSuccess from './component/cart/OrderSuccess';
 import MyOrders from './component/order/MyOrders';
 import OrderDetails from './component/order/OrderDetails';
+import Dashboard from './component/admin/Dashboard';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -95,6 +96,10 @@ function App() {
         <Route extact path='/orders' element={<Protected Component={MyOrders} />} />
 
         <Route extact path='/order/:id' element={<Protected Component={OrderDetails} />} />
+
+        {/* ///////////////////////// Admin Dashboard Routes  ////////////////////////////////////////////////////// */}
+
+        <Route extact path='/admin/dashboard' element={<Protected Component={Dashboard} />} />
 
       </Routes>
 
