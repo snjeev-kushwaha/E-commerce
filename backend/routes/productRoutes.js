@@ -9,12 +9,15 @@ const {
     deleteProduct,
     createProductReview,
     getProdcutReviews,
-    deleteProductReviews
+    deleteProductReviews,
+    getAdminProducts
 } = require('../controllers/productController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 productRoute.route('/products').get(getAllProducts);
+
+productRoute.route('/admin/products').get(isAuthenticatedUser, authorizeRoles("admin"), getAdminProducts)
 
 productRoute.route('/admin/product/new')
     .post(isAuthenticatedUser, authorizeRoles("admin"), createProduct);

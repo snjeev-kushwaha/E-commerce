@@ -2,7 +2,9 @@ const asyncHandler = require('express-async-handler')
 const Product = require('../model/productModel')
 const ErrorHandler = require('../utils/errorhander')
 const ApiFeatures = require('../utils/apifeatures')
+const cloudinary = require('cloudinary')
 
+//Get All Products
 const getAllProducts = asyncHandler(async (req, res) => {
    const resultPerPage = 10;
    const productCount = await Product.countDocuments()
@@ -26,9 +28,40 @@ const getAllProducts = asyncHandler(async (req, res) => {
    })
 })
 
+//Get All Products (Admin)
+const getAdminProducts = asyncHandler(async (req, res, next) => {
+   const products = await Product.find()
+
+   res.status(200).json({
+      success: true,
+      products,
+   })
+})
+
 // create product  ---- admin
 const createProduct = asyncHandler(async (req, res, next) => {
+   let images = [];
+   if (typeof req.body.images === "string") {
+      images.push(req.body.images);
+   } else {
+      images = req.body.images;
+   }
+
+   const imagesLink = []
+
+   for (let i = 0; images.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(images[i], {
+         folder: "products"
+      })
+      imagesLink.push({
+         public_id: result.public_id,
+         url: result.secure_url,
+      })
+   }
+   req.body.images = imagesLink;
+
    req.body.user = req.user.id;
+
    const product = await Product.create(req.body)
 
    res.status(201).json({
@@ -170,5 +203,6 @@ module.exports = {
    deleteProduct,
    createProductReview,
    getProdcutReviews,
-   deleteProductReviews
+   deleteProductReviews,
+   getAdminProducts,
 }

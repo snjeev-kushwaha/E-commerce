@@ -1,10 +1,10 @@
 // import React, { Fragment } from 'react';
-// import { Route, useNavigate } from 'react-router-dom';
+// import { Route, useNavigate, Redirect } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 
-// const ProtectedRoute = ({ component: Component, ...rest }) => {
+// const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
 //     const navigate = useNavigate();
-//     const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+//     const { loading, isAuthenticated } = useSelector((state) => state.user);
 //     return (
 //         <Fragment>
 //             {!loading && (
@@ -15,6 +15,9 @@
 //                             // return <Redirect to="/login" />
 //                             return navigate('/login')
 //                         }
+// if (isAdmin === true && user.role !== "admin") {
+//   return navigate('/login')
+// }
 //                         return <Component {...props} />
 //                     }}
 //                 />
@@ -27,7 +30,10 @@
 
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-const Protected = (props) => {
+import { useSelector } from 'react-redux';
+
+const Protected = (props, isAdmin) => {
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
   const { Component } = props
   const navigate = useNavigate()
 
@@ -35,6 +41,12 @@ const Protected = (props) => {
     const login = localStorage.getItem('token')
     if (!login) {
       navigate('/login')
+    }
+    if (isAuthenticated === false) {
+      return navigate('/login');
+    }
+    if (isAdmin === true && user.role !== "admin") {
+      return navigate('/login')
     }
   })
   return (
