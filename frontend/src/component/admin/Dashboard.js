@@ -1,34 +1,40 @@
+import React, { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
-import React from 'react';
 import './dashboard.css';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
-// import { Doughnut, Line } from 'react-chartjs-2';
+import { Chart } from "react-google-charts";
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdminProduct } from '../../actions/ProductAction';
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
+    const { products } = useSelector((state) => state.products);
 
-    // const lineState = {
-    //     labels: ["Initial Amount", "Amount Earned"],
-    //     datasets: [
-    //         {
-    //             label: "TOTAL AMOUNT",
-    //             backgroundColor: ["tomato"],
-    //             hoverBackgroundColor: ["rgb(197, 72, 49)"],
-    //             data: [0, 2000],
-    //         },
-    //     ],
-    // };
+    let outofStock = 0;
+    products && products.forEach((item) => {
+        if (item.stock === 0) {
+            outofStock += 1;
+        }
+    });
 
-    // const doughnutState = {
-    //     labels: ["Out of Stock", "InStock"],
-    //     datasets: [
-    //         {
-    //             backgroundColor: ["#00A6B4", "#6800B4"],
-    //             hoverBackgroundColor: ["#4B5000", "#35014F"],
-    //             // data: [outOfStock, products.length - outOfStock],
-    //         },
-    //     ],
-    // };
+    useEffect(() => {
+        dispatch(getAdminProduct());
+    }, [dispatch]);
+
+    const options1 = {
+        title: "TOTAL AMOUNT",
+        pieHole: 0.4,
+        is3D: false,
+    }
+
+    // const data = [outofStock, products.length - outofStock];
+    const data = [outofStock, 20000];
+    const options = {
+        title: "My Daily Activities",
+        pieHole: 0.4,
+        is3D: false,
+    };
 
     return (
         <div className='dashboard'>
@@ -44,25 +50,43 @@ const Dashboard = () => {
                     </div>
                     <div className='dashboardSummaryBox2'>
                         <Link to="/admin/products">
-                            <p>Product</p>
-                            <p>50</p>
+                            <span>Product</span>
+                            <span>50</span>
                         </Link>
                         <Link to="/admin/orders">
-                            <p>Orders</p>
-                            <p>4</p>
+                            <span>Orders</span>
+                            <span>4</span>
                         </Link>
                         <Link to="/admin/users">
-                            <p>Users</p>
-                            <p>2</p>
+                            <span>Users</span>
+                            <span>2</span>
                         </Link>
                     </div>
                 </div>
 
-                {/* <div className='lineChart'>
-                    <Line data={lineState} />
-                </div>
+                <Chart
+                    chartType="ScatterChart"
+                    data={[["", ""], ["Initial Amount", 0], ["Amount Earned", 2000]]}
+                    width="80%"
+                    height="400px"
+                    // margin="auto"
+                    legendToggle
+                    options={options1}
+                />
 
-                <div className="doughnutChart">
+                <Chart
+                    chartType="PieChart"
+                    width="100%"
+                    height="400px"
+                    data={data}
+                    options={options}
+                />
+
+                {/* <div className='lineChart'>
+                    <Chart data={lineState} />
+                </div> */}
+
+                {/* <div className="doughnutChart">
                     <Doughnut data={doughnutState} />
                 </div> */}
             </div>

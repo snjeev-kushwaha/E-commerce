@@ -32,6 +32,8 @@ import OrderSuccess from './component/cart/OrderSuccess';
 import MyOrders from './component/order/MyOrders';
 import OrderDetails from './component/order/OrderDetails';
 import Dashboard from './component/admin/Dashboard';
+import ProductList from './component/admin/ProductList';
+import NewProduct from './component/admin/NewProduct';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -97,9 +99,14 @@ function App() {
 
         <Route extact path='/order/:id' element={<Protected Component={OrderDetails} />} />
 
-        {/* ///////////////////////// Admin Dashboard Routes  ////////////////////////////////////////////////////// */}
+        {/* ///////////////////////// Admin Dashboard Routes  //////////////////////////////////////////// */}
 
-        <Route extact path='/admin/dashboard' element={<Protected Component={Dashboard} />} />
+        <Route isAdmin={true} extact path='/admin/dashboard' element={<Protected Component={Dashboard} />} />
+        {/* <Route extact path='/admin/dashboard' element={<Protected isAdmin={true} Component={Dashboard} />} /> */}
+
+        <Route isAdmin={true} extact path='/admin/products' element={<Protected Component={ProductList} />} />
+
+        <Route isAdmin={true} extact path='/admin/product' element={<Protected Component={NewProduct} />} />
 
       </Routes>
 

@@ -35,13 +35,13 @@ export const login = (email, password) => async (dispatch) => {
 
         const configs = { headers: { "Content-Type": "application/json" } }
 
-        const { data } = await axios.post(
+        const {data} = await axios.post(
             `${config.URL}/user/login`,
             { email, password },
             configs
         );
         localStorage.setItem("token", data.token);
-        // setCookie("Cookietoken", data.user.token);
+        // setCookie("Cookietoken", data.token);
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     }
     catch (error) {

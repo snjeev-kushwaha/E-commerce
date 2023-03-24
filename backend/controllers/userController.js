@@ -42,7 +42,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
     if (!email || !password) {
         return next(new ErrorHandler("Please enter Email & password", 400))
     }
-
     const user = await User.findOne({ email: email }).select("+password")
     if (!user) {
         return next(new ErrorHandler("Invalid email or Password", 401))
@@ -52,9 +51,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid email or password", 401))
     }
-
     sendToken(user, 200, res)
-
 });
 
 // Logout User
