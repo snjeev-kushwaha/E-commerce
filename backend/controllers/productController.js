@@ -88,6 +88,35 @@ const updateProduct = asyncHandler(async (req, res, next) => {
    if (!product) {
       return next(new ErrorHandler("Product not found", 404))
    }
+   // Images Start here
+   let images = [];
+   if (typeof req.body.images === "string") {
+      images.push(req.body.images)
+   } else {
+      images = req.body.images;
+   }
+
+   if (images !== undefined) {
+
+      // deleting images from cloudinary
+      for (let i = o; product.images.length; i++) {
+         await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+      }
+
+      const imagesLink = []
+
+      for (let i = 0; images.length; i++) {
+         const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: "products"
+         })
+         imagesLink.push({
+            public_id: result.public_id,
+            url: result.secure_url,
+         })
+      }
+      req.body.images = imagesLink;
+   }
+
    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -104,6 +133,13 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
    if (!product) {
       return next(new ErrorHandler("Product not found", 404))
    }
+   /////////////// Deleting images from cloudinary
+   for (let i = o; product.images.length; i++) {
+      // const element = array[i];
+      await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+      // const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+   }
+
    const deletedProduct = await Product.findByIdAndDelete(product)
    res.status(200).json({
       success: true,
