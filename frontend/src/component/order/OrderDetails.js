@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import MetaData from '../layout/MetaData';
 import { Link, useLocation } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
-import { getorderDetails, clearErrors } from '../../actions/orderAction';
+import { getOrderDetails, clearErrors } from '../../actions/orderAction';
 import Loader from '../layout/loader/Loader';
 import { useAlert } from 'react-alert';
 
@@ -22,7 +22,7 @@ const OrderDetails = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getorderDetails(id));
+    dispatch(getOrderDetails(id));
   }, [dispatch, alert, error, id]);
 
   return (

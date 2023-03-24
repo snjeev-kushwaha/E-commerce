@@ -13,8 +13,8 @@ orderRoute.route('/order/:id').get(isAuthenticatedUser, getSingleOrder);
 
 orderRoute.route('/order/me/my').get(isAuthenticatedUser, myOrders)
 
-orderRoute.route('/order/admin/:id').put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder);
+orderRoute.route('/admin/order/:id').put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder);
 
-orderRoute.route('/order/admin/:id').delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
+orderRoute.route('/admin/order/:id').delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
 
 module.exports = { orderRoute };
