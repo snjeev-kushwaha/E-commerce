@@ -37,6 +37,9 @@ import NewProduct from './component/admin/NewProduct';
 import UpdateProduct from './component/admin/UpdateProduct';
 import OrderList from './component/admin/OrderList';
 import ProcessOrder from './component/admin/ProcessOrder';
+import UsersList from './component/admin/UsersList';
+import UpdateUser from './component/admin/UpdateUser';
+import ProductReviews from './component/admin/ProductReviews';
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -116,6 +119,12 @@ function App() {
         <Route isAdmin={true} extact path='/admin/orders' element={<Protected Component={OrderList} />} />
 
         <Route isAdmin={true} extact path='/admin/order/:id' element={<Protected Component={ProcessOrder} />} />
+
+        <Route isAdmin={true} extact path='/admin/users' element={<Protected Component={UsersList} />} />
+
+        <Route isAdmin={true} extact path='/admin/user/:id' element={<Protected Component={UpdateUser} />} />
+
+        <Route isAdmin={true} extact path='/admin/reviews' element={<Protected Component={ProductReviews} />} />
 
       </Routes>
 

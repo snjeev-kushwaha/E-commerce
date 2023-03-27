@@ -6,10 +6,16 @@ import { Link } from 'react-router-dom';
 import { Chart } from "react-google-charts";
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdminProduct } from '../../actions/ProductAction';
+import { getAllOrders } from '../../actions/orderAction';
+import { getAllUser } from '../../actions/UserAction';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+
     const { products } = useSelector((state) => state.products);
+    // const { orders } = useSelector((state) => state.getAllOrders)
+    // const { users } = useSelector((state) => state.getAllUser)
+
 
     let outofStock = 0;
     products && products.forEach((item) => {
@@ -20,6 +26,10 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(getAdminProduct());
+
+        dispatch(getAllOrders())
+
+        dispatch(getAllUser())
     }, [dispatch]);
 
     const options1 = {
@@ -51,15 +61,15 @@ const Dashboard = () => {
                     <div className='dashboardSummaryBox2'>
                         <Link to="/admin/products">
                             <span>Product</span>
-                            <span>50</span>
+                            <span>{products && products.length}</span>
                         </Link>
                         <Link to="/admin/orders">
                             <span>Orders</span>
-                            <span>4</span>
+                            {/* <span>{orders && orders.length}</span> */}
                         </Link>
                         <Link to="/admin/users">
                             <span>Users</span>
-                            <span>2</span>
+                            {/* <span>{users && users.legendToggle}</span> */}
                         </Link>
                     </div>
                 </div>
@@ -82,13 +92,6 @@ const Dashboard = () => {
                     options={options}
                 />
 
-                {/* <div className='lineChart'>
-                    <Chart data={lineState} />
-                </div> */}
-
-                {/* <div className="doughnutChart">
-                    <Doughnut data={doughnutState} />
-                </div> */}
             </div>
         </div>
     )

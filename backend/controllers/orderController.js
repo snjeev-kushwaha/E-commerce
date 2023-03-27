@@ -85,8 +85,14 @@ const updateOrder = asyncHandler(async (req, res, next) => {
     order.orderItems.forEach(async (o) => {
         await updateStock(o.product, o.quantity)
     })
-    
+
+    if (req.body.status === "Shipped") {
+        order.orderItems.forEach(async (o) => {
+            await updateStock(o.product, o.quantity);
+        })
+    }
     order.orderStatus = req.body.status;
+
     if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now()
     }
@@ -99,7 +105,7 @@ const updateOrder = asyncHandler(async (req, res, next) => {
 async function updateStock(id, quantity) {
     const product = await Product.findById(id)
 
-       product.stock = product.stock - quantity
+    product.stock = product.stock - quantity
     // product.stock -= quantity;
 
     await product.save({ validateBeforeSave: false })
