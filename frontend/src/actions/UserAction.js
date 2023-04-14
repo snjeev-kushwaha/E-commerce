@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { useCookies } from 'react-cookie';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -37,6 +36,7 @@ import {
     DELETE_USER_FAIL,
 } from '../constants/userConstants';
 import config from '../config';
+// import { useCookies } from 'react-cookie';
 
 // Login user
 export const login = (email, password) => async (dispatch) => {
@@ -51,8 +51,10 @@ export const login = (email, password) => async (dispatch) => {
             { email, password },
             configs
         );
+        console.log("data p", data);
         localStorage.setItem("token", data.token);
-        // setCookie("Cookietoken", data.token);
+        // setCookie("token", data.token);
+        console.log(data.token, 'data')
         dispatch({ type: LOGIN_SUCCESS, payload: data.user });
     }
     catch (error) {

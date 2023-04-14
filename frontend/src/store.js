@@ -24,6 +24,7 @@ const reducer = combineReducers({
     allUsers: allUserReducer,
     userDetails: userDetailsReducer,
 });
+
 let initialState = {
     cart: {
         cartItems: localStorage.getItem("cartItems")

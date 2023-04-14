@@ -1,6 +1,6 @@
 .banner {
   background-image: linear-gradient(to right, #635dc0, #3027ae);
-  height: 90.5vmin;
+  height: 85.4vmin;
   /* height: 100vmin; */
   display: flex;
   flex-direction: column;
@@ -105,6 +105,9 @@
 }
 
 @media screen and (max-width: 600px) {
+  .banner{
+    height: 50vmin;
+  }
   .productCard > p {
     font-size: 1.7vmax;
   }
